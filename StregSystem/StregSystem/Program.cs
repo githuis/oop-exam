@@ -10,6 +10,7 @@ namespace StregSystem
     {
         static void Main(string[] args)
         {
+            //SeasonalProduct bajaer = new SeasonalProduct(0, "What UP", 29, true, true, null, null);
         }
     }
 }

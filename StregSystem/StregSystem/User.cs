@@ -8,7 +8,6 @@ namespace StregSystem
 {
     class User : IComparable
     {
-        //Test
         private int _userID;
         private string _firstname;
         private string _lastname;
@@ -50,9 +49,15 @@ namespace StregSystem
         }
         #endregion
 
-        public User()
+        public User(int id, string firstname, string lastname, string email, int bal)
         {
-
+            _userID = id;
+            _firstname = firstname;
+            _lastname = lastname;
+            //TODO Gyldighed
+            _email = email;
+            _balance = bal;
+            _username = GenerateUsername(lastname, firstname, id);
         }
 
         public override string ToString()
@@ -60,10 +65,16 @@ namespace StregSystem
             return Firstname + ", " + Email;
         }
 
-        public override int CompareTo(Object obj)
+        public int CompareTo(Object obj)
         {
-            //TODO
-            return 1;
+            if (obj == null)
+                return 1;
+
+            User otherUser = obj as User;
+            if (otherUser != null)
+                return this.UserID.CompareTo(otherUser.UserID);
+            else
+                throw new ArgumentException("Object is not of type 'User'");
         }
 
         public override bool Equals(object obj)
@@ -71,11 +82,19 @@ namespace StregSystem
             if (obj == null || !(obj is User))
                 return false;
             else
-                return UserID == ((User)obj).UserID;
+                return UserID == ((User) obj).UserID;
         }
 
+        public override int GetHashCode()
+        {
+            //8 is an arbitrary number, but it is the same for every instance of user, which is the important part.
+            return this.UserID.GetHashCode() * 16;
+        }
         
-
+        private string GenerateUsername(string nameOne, string nameTwo, int num)
+        {
+            return nameOne + num.ToString() + nameTwo[0];
+        }
 
     }
 }
