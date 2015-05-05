@@ -8,6 +8,7 @@ namespace StregSystem
 {
     class User : IComparable
     {
+        //Test
         private int _userID;
         private string _firstname;
         private string _lastname;
