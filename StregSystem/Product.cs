@@ -52,6 +52,11 @@ namespace StregSystem
 
         public Product(int id, string name, int price, bool active, bool canCredit)
         {
+            if (id < 1)
+                throw new ArgumentOutOfRangeException("Product ID must be higher than 0!");
+            if (name == null)
+                throw new ArgumentNullException("Product name cannot be null");
+
             _productID = id;
             _name = name;
             _price = price;

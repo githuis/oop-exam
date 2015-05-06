@@ -36,8 +36,8 @@ namespace StregSystem
 
             }
             else
+                throw new ProductInactiveException("Product is not active, so it cannot be bought");
                 
-                ;
         }
     }
 }

@@ -10,7 +10,10 @@ namespace StregSystem
     {
         static void Main(string[] args)
         {
-            
+
+            User per = new User("Per", "Hansen", "-zh_-e.x@l-i_-ve.dk");
+            User userTwo = new User("Jens", "Pedersen", "eksempel@mit_domain.dk", 200);
+
 
             Console.Read();
         }

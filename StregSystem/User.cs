@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace StregSystem
 {
@@ -14,6 +15,8 @@ namespace StregSystem
         private string _username;
         private string _email;
         private int _balance;
+
+        public static List<User> All = new List<User>();
 
         #region Properties
         public int Balance
@@ -49,20 +52,55 @@ namespace StregSystem
         }
         #endregion
 
-        public User(int id, string firstname, string lastname, string email, int bal)
+        public User(string firstname, string lastname, string email)
         {
-            _userID = id;
+            if (ValidEmail(email))
+                _email = email;
+            else
+                throw new ArgumentException("Email is not valid");
+
+            if (ValidUsername(GenerateUsername(lastname, UserID)))
+                _username = GenerateUsername(lastname, UserID);
+            else
+                throw new ArgumentException("Invalid username Generated");
+
+            if (firstname == null || lastname == null)
+                throw new ArgumentNullException("User firstname and/or lastname cannot be null");
+
+            _userID = All.Count();
             _firstname = firstname;
             _lastname = lastname;
-            //TODO Gyldighed
-            _email = email;
+            _balance = 0;
+            
+            User.All.Add(this);
+        }
+
+        public User(string firstname, string lastname, string email, int bal)
+        {
+            if (ValidEmail(email))
+                _email = email;
+            else
+                throw new ArgumentException("Email is not valid");
+
+            if (ValidUsername(GenerateUsername(lastname, UserID)))
+                _username = GenerateUsername(lastname, UserID);
+            else
+                throw new ArgumentException("Invalid username Generated");
+
+            if (firstname == null || lastname == null)
+                throw new ArgumentNullException("User firstname and/or lastname cannot be null");
+
+            _userID = All.Count();
+            _firstname = firstname;
+            _lastname = lastname;
             _balance = bal;
-            _username = GenerateUsername(lastname, firstname, id);
+
+            User.All.Add(this);
         }
 
         public override string ToString()
         {
-            return Firstname + ", " + Email;
+            return Firstname + " " + Lastname + " " + Email;
         }
 
         public int CompareTo(Object obj)
@@ -91,9 +129,44 @@ namespace StregSystem
             return this.UserID.GetHashCode() * 16;
         }
 
-        private string GenerateUsername(string nameOne, string nameTwo, int num)
+        private string GenerateUsername(string name, int num)
         {
-            return nameOne + num.ToString() + nameTwo[0];
+            return name + "_" + num;
+        }
+
+        private bool ValidEmail(string mail)
+        {
+            bool local = false, domain = false;
+            string[] split = mail.Split('@');
+            if (split.Length < 2)
+                return false;
+
+            //Local check
+            Regex check = new Regex("[a-zA-Z0-9-_.]");
+            local = check.IsMatch(split[0]);
+
+            //Domain check
+            check = new Regex("[a-zA-Z0-9-._]");
+            domain = check.IsMatch(split[1]) && split[1].Contains('.') 
+                && !CharEquals(split[1][0], '.', '-', '_') && !CharEquals(split[1][split[1].Length-1], '.', '-', '_');
+            
+            return (local && domain);
+        }
+
+        private bool CharEquals(char compareTo, params char[] chars)
+        {
+            foreach (char ch in chars)
+	        {
+		        if(ch == compareTo)
+                    return true;
+	        }
+            return false;
+        }
+
+        private bool ValidUsername(string username)
+        {
+            Regex check = new Regex("[a-z0-9_]");
+            return check.IsMatch(username);
         }
 
     }
