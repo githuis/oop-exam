@@ -24,6 +24,12 @@ namespace StregSystem
             set { _seasonStartDate = value; }
         }
 
+        public SeasonalProduct(int id, string name, int price, bool active, bool canCredit)
+            : base(id, name, price, active, canCredit)
+        {
+            //Calls base constructor
+        }
+
         public SeasonalProduct(int id, string name, int price, bool active, bool canCredit, DateTime start, DateTime end) 
             : base(id, name, price, active, canCredit)
         {

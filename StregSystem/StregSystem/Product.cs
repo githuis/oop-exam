@@ -14,6 +14,7 @@ namespace StregSystem
         private bool _active;
         private bool _canBeBoughtOnCredit;
 
+        #region Properties
         public bool CanBeBoughtOnCredit
         {
             get { return _canBeBoughtOnCredit; }
@@ -42,7 +43,8 @@ namespace StregSystem
                     _name = value;
             }
         }
-        
+        #endregion
+
         public int ProductID
         {
             get { return _productID; }

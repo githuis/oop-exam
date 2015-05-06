@@ -16,28 +16,27 @@ namespace StregSystem
         private int _balance;
 
         #region Properties
-        
         public int Balance
         {
             get { return _balance; }
         }
-        
+
         public string Email
         {
             get { return _email; }
             set { _email = value; }
         }
-        
+
         public string Username
         {
             get { return _username; }
         }
-        
+
         public string Lastname
         {
             get { return _lastname; }
         }
-        
+
         public string Firstname
         {
             get { return _firstname; }
@@ -82,7 +81,7 @@ namespace StregSystem
             if (obj == null || !(obj is User))
                 return false;
             else
-                return UserID == ((User) obj).UserID;
+                return UserID == ((User)obj).UserID;
         }
 
         public override int GetHashCode()
@@ -90,7 +89,7 @@ namespace StregSystem
             //8 is an arbitrary number, but it is the same for every instance of user, which is the important part.
             return this.UserID.GetHashCode() * 16;
         }
-        
+
         private string GenerateUsername(string nameOne, string nameTwo, int num)
         {
             return nameOne + num.ToString() + nameTwo[0];
