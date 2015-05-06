@@ -19,6 +19,7 @@ namespace StregSystem
         public int Balance
         {
             get { return _balance; }
+            set { _balance = value; }
         }
 
         public string Email

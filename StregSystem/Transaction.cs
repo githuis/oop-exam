@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystem
 {
-    public abstract class Transaction
+    abstract class Transaction
     {
         private int _transactionID;
         private User _transUser;
