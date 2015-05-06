@@ -48,7 +48,6 @@ namespace StregSystem
 
         public virtual void Execute()
         {
-            
             LogTransaction();
         }
 
