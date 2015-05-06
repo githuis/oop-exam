@@ -57,6 +57,5 @@ namespace StregSystem
             //TODO log transaction to file
         }
 
-
     }
 }
