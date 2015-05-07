@@ -10,7 +10,7 @@ namespace StregSystemProject
     {
         private int _productID;
         private string _name;
-        private int _price;
+        private double _price;
         private bool _active;
         private bool _canBeBoughtOnCredit;
 
@@ -28,7 +28,7 @@ namespace StregSystemProject
         }
         
 
-        public int Price
+        public double Price
         {
             get { return _price; }
             set { _price = value; }
@@ -50,7 +50,7 @@ namespace StregSystemProject
             get { return _productID; }
         }
 
-        public Product(int id, string name, int price, bool active, bool canCredit)
+        public Product(int id, string name, double price, bool active, bool canCredit)
         {
             if (id < 1)
                 throw new ArgumentOutOfRangeException("Product ID must be higher than 0!");
@@ -63,6 +63,11 @@ namespace StregSystemProject
             _active = active;
             _canBeBoughtOnCredit = canCredit;
 
+        }
+
+        public override string ToString()
+        {
+            return ProductID + " - " + Name;
         }
     }
 }

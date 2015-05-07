@@ -11,9 +11,9 @@ namespace StregSystemProject
         private int _transactionID;
         private User _transUser;
         private DateTime _date;
-        private int _amount;
+        private double _amount;
         #region Properties
-        public int Amount
+        public double Amount
         {
             get { return _amount; }
             set { _amount = value; }
@@ -38,7 +38,7 @@ namespace StregSystemProject
         }
         #endregion
 
-        public Transaction(int id, User user, DateTime date, int amount)
+        public Transaction(int id, User user, DateTime date, double amount)
         {
             _transactionID = id;
             _transUser = user;

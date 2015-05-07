@@ -18,8 +18,13 @@ namespace StregSystemProject
 
             system.BuyProduct(per, p);
             system.AddCreditsToUser(per, -10);
+            system.AddCreditsToUser(per, 500);
+
+            Console.WriteLine("");
+
             
-            
+            StregSystem.AllProducts.ForEach(Console.WriteLine);
+
 
             Console.Read();
         }

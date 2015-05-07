@@ -15,7 +15,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return TransUser.Firstname + " satte " +  Amount.ToString() + "ind d. " + Date.Date;
+            return TransUser.Firstname + " satte " +  Amount.ToString() + "kr ind d. " + Date.ToShortDateString();
         }
 
         public override void Execute()

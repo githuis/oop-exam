@@ -22,7 +22,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return TransUser.Firstname + " købte " + TransProduct + " for " + Amount.ToString() + " d. " + Date.Date;
+            return TransUser.Firstname + " købte " + TransProduct + " for " + Amount.ToString() + " d. " + Date.ToShortDateString();
         }
 
         public override void Execute()

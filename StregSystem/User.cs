@@ -14,12 +14,12 @@ namespace StregSystemProject
         private string _lastname;
         private string _username;
         private string _email;
-        private int _balance;
+        private double _balance;
 
         public static List<User> All = new List<User>();
 
         #region Properties
-        public int Balance
+        public double Balance
         {
             get { return _balance; }
             set { _balance = value; }
