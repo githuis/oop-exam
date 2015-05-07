@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace StregSystem
+namespace StregSystemProject
 {
     class InsertCashTransaction : Transaction
     {
@@ -20,8 +20,12 @@ namespace StregSystem
 
         public override void Execute()
         {
-            TransUser.Balance += Amount;
-            LogTransaction();
+            if (Amount > 0)
+            {
+                TransUser.Balance += Amount;
+            }
+            else
+                throw new ArgumentException("Cannot insert credits less than one credits");
         }
     }
 }

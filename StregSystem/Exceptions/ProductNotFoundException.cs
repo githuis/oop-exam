@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace StregSystemProject
 {
-    class ProductInactiveException : Exception
+    class ProductNotFoundException : Exception
     {
-        public ProductInactiveException()
+        public ProductNotFoundException()
             : base ()
         {
                 
         }
 
-        public ProductInactiveException(string message)
+        public ProductNotFoundException(string message)
             : base (message)
         {
 

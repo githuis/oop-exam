@@ -7,7 +7,7 @@
     <ProjectGuid>{1CFA5DE7-303C-47BD-83F9-AAAA3F78F0F8}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StregSystem</RootNamespace>
+    <RootNamespace>StregSystemProject</RootNamespace>
     <AssemblyName>StregSystem</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Transactions\BuyTransaction.cs" />
     <Compile Include="Transactions\InsertCashTransaction.cs" />
     <Compile Include="Exceptions\InsufficientCreditsException.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeasonalProduct.cs" />
     <Compile Include="Exceptions\ProductInactiveException.cs" />
-    <Compile Include="Transactions\StregSystem.cs" />
+    <Compile Include="StregSystem.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>
