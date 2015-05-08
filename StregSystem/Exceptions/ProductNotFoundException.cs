@@ -9,15 +9,11 @@ namespace StregSystemProject
     class ProductNotFoundException : Exception
     {
         public ProductNotFoundException()
-            : base ()
-        {
-                
-        }
+            :base()
+        {}
 
         public ProductNotFoundException(string message)
             : base (message)
-        {
-
-        }
+        {}
     }
 }

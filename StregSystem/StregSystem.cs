@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace StregSystemProject
 {
@@ -15,6 +16,7 @@ namespace StregSystemProject
 
         public StregSystem()
         {
+
             AllProducts = new List<Product>();
             LoadProdutcs();
         }
@@ -43,7 +45,7 @@ namespace StregSystemProject
 
                 using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
                     transaction.LogTransaction(transaction.ToString(), w);
-                    
+
             }
             catch (ArgumentException e)
             {
@@ -78,23 +80,22 @@ namespace StregSystemProject
                 if (split[0] == "id")
                     continue;
                 //If product id is larger than zero
-                if( int.Parse(split[0]) > 0)
+                if (int.Parse(split[0]) > 0)
                 {
                     try
                     {
-                        AllProducts.Add(new Product(int.Parse(split[0]), split[1], int.Parse(split[2]), IntToBool(int.Parse(split[3])), false));
+                        AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2]), IntToBool(int.Parse(split[3])), false));
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
                         //TODO Send to comm class
                         Console.WriteLine(e.Message);
                     }
-                    catch ( ArgumentNullException e)
+                    catch (ArgumentNullException e)
                     {
                         //TODO send to comm class
                         Console.WriteLine(e.Message);
                     }
-                    
                 }
             }
         }
@@ -109,9 +110,7 @@ namespace StregSystemProject
 
         private string StripString(string s)
         {
-            s = s.Trim(new char[] { '"' });
-
-            return s;
+            return Regex.Replace(Regex.Replace(s, "\"", ""), "<.*?>", "");
         }
 
         public Product GetProduct(int id)
@@ -121,7 +120,6 @@ namespace StregSystemProject
                 if (p.ProductID == id)
                     return p;
             }
-
             throw new ProductNotFoundException("Product with id " + id + " not found");
         }
 
@@ -135,6 +133,65 @@ namespace StregSystemProject
             throw new UserNotFoundException("No user found with username: " + username);
         }
 
+        public List<Transaction> GetTransactionList(User u)
+        {
+            List<Transaction> list = new List<Transaction>();
+
+            foreach (Transaction t in AllTransactions)
+            {
+                if (u == t.TransUser)
+                    list.Add(t);
+            }
+            if (list.Count != 0)
+                return list;
+            else
+                throw new TransactionNotFoundException("No transactions found for user " + u.Username);
+        }
+
+        public List<Transaction> GetTransactionList(string username)
+        {
+            List<Transaction> list = new List<Transaction>();
+
+            foreach (Transaction t in AllTransactions)
+            {
+                if (username == t.TransUser.Username)
+                    list.Add(t);
+            }
+            if (list.Count != 0)
+                return list;
+            else
+                throw new TransactionNotFoundException("No transactions found for user " + username);
+        }
+
+        public List<Transaction> GetTransactionList(User u, DateTime from, DateTime to)
+        {
+            List<Transaction> list = new List<Transaction>();
+
+            foreach (Transaction t in AllTransactions)
+            {
+                if (u == t.TransUser && t.Date > from && t.Date < to)
+                    list.Add(t);
+            }
+            if (list.Count != 0)
+                return list;
+            else
+                throw new TransactionNotFoundException("No transactions found for user " + u.Username + " between "
+                    + from.ToShortDateString() + " and " + to.ToShortDateString());
+        }
+
+        public List<Product> GetActiveProducts()
+        {
+            List<Product> actives = new List<Product>();
+            foreach (Product p in AllProducts)
+            {
+                if (p.Active)
+                    actives.Add(p);
+            }
+            if (actives.Count != 0)
+                return actives;
+            else
+                throw new ProductNotFoundException("No active products found");
+        }
 
 
     }

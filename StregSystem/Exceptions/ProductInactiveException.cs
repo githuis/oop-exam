@@ -9,15 +9,11 @@ namespace StregSystemProject
     class ProductInactiveException : Exception
     {
         public ProductInactiveException()
-            : base ()
-        {
-                
-        }
+            :base()
+        {}
 
         public ProductInactiveException(string message)
-            : base (message)
-        {
-
-        }
+            :base(message)
+        {}
     }
 }

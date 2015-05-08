@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace StregSystemProject
 {
-    class UserNotFoundException : Exception
+    class TransactionNotFoundException : Exception
     {
-        public UserNotFoundException()
+        public TransactionNotFoundException()
             :base()
         {}
 
-        public UserNotFoundException(string message)
+        public TransactionNotFoundException(string message)
             :base(message)
         {}
     }

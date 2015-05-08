@@ -9,11 +9,11 @@ namespace StregSystemProject
     class InsufficientCreditsException : Exception
     {
         public InsufficientCreditsException() 
-            : base()
+            :base()
         {}
 
         public InsufficientCreditsException(string message)
-            : base (message)
+            :base(message)
         {}
     }
 }
