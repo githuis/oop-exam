@@ -49,18 +49,15 @@ namespace StregSystemProject
             }
             catch (ArgumentException e)
             {
-                //TODO send to communication class
-                Console.WriteLine(e.Message);
+                StregSystemCLI.PrintError(e.Message);
             }
             catch (InsufficientCreditsException e)
             {
-                //TODO send to communication class
-                Console.WriteLine(e.Message);
+                StregSystemCLI.PrintError(e.Message);
             }
             catch (ProductInactiveException e)
             {
-                //TODO send to communication class
-                Console.WriteLine(e.Message);
+                StregSystemCLI.PrintError(e.Message);
             }
         }
 
@@ -88,13 +85,11 @@ namespace StregSystemProject
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
-                        //TODO Send to comm class
-                        Console.WriteLine(e.Message);
+                        StregSystemCLI.PrintError(e.Message);
                     }
                     catch (ArgumentNullException e)
                     {
-                        //TODO send to comm class
-                        Console.WriteLine(e.Message);
+                        StregSystemCLI.PrintError(e.Message);
                     }
                 }
             }

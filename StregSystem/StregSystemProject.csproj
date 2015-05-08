@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Exceptions\ProductNotFoundException.cs" />
     <Compile Include="Exceptions\TransactionNotFoundException.cs" />
+    <Compile Include="IStregSystemUI.cs" />
+    <Compile Include="StregSystemCLI.cs" />
     <Compile Include="Transactions\BuyTransaction.cs" />
     <Compile Include="Transactions\InsertCashTransaction.cs" />
     <Compile Include="Exceptions\InsufficientCreditsException.cs" />
