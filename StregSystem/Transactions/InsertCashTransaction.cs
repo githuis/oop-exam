@@ -9,7 +9,7 @@ namespace StregSystemProject
     class InsertCashTransaction : Transaction
     {
 
-        public InsertCashTransaction(int id, User user, DateTime date, int amount) 
+        public InsertCashTransaction(int id, User user, DateTime date, double amount) 
             : base (id, user, date, amount)
         {}
 
@@ -25,7 +25,7 @@ namespace StregSystemProject
                 TransUser.Balance += Amount;
             }
             else
-                throw new ArgumentException("Cannot insert credits less than one credits");
+                throw new ArgumentException("Cannot insert credits zero or less money");
         }
     }
 }

@@ -53,8 +53,12 @@
     <Compile Include="StregSystem.cs" />
     <Compile Include="Transactions\Transaction.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="Exceptions\UserNotFoundException.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\Log.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="App.config" />
     <Content Include="Data\products.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

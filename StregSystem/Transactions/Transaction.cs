@@ -12,6 +12,7 @@ namespace StregSystemProject
         private User _transUser;
         private DateTime _date;
         private double _amount;
+
         #region Properties
         public double Amount
         {
@@ -46,15 +47,20 @@ namespace StregSystemProject
             _amount = amount;
         }
 
-        public virtual void Execute()
-        {
-            LogTransaction();
-        }
+        public abstract void Execute();
+     
 
         //Consider Interface for objects able to log
-        public void LogTransaction()
+        public void LogTransaction(string logEntry, System.IO.StreamWriter w)
         {
-            //TODO log transaction to file
+            w.WriteLine("*///////////////////////////////");
+            w.WriteLine("Transaction:\n");
+            w.WriteLine(Date.ToShortDateString() + " " + Date.ToShortTimeString());
+            w.WriteLine(logEntry);
+            w.WriteLine("");
+
+            Console.WriteLine("Wrote to log");
+
         }
 
     }

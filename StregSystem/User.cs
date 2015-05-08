@@ -138,7 +138,7 @@ namespace StregSystemProject
         {
             bool local = false, domain = false;
             string[] split = mail.Split('@');
-            if (split.Length < 2)
+            if (split.Length != 2)
                 return false;
 
             //Local check

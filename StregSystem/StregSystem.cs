@@ -9,8 +9,9 @@ namespace StregSystemProject
 {
     class StregSystem
     {
-        public static List<Transaction> AllTransactions = new List<Transaction>();
-        public static List<Product> AllProducts;
+        public List<Transaction> AllTransactions = new List<Transaction>();
+        public List<Product> AllProducts;
+        public List<User> AllUsers;
 
         public StregSystem()
         {
@@ -20,14 +21,12 @@ namespace StregSystemProject
 
         public void BuyProduct(User user, Product product)
         {
-            //TODO Actually buy something
             BuyTransaction transaction = new BuyTransaction(NewTransactionID(), user, DateTime.Now, product);
             ExecuteTransaction(transaction);
         }
 
-        public void AddCreditsToUser(User user, int amount)
+        public void AddCreditsToUser(User user, double amount)
         {
-            //TODO set id properly
             InsertCashTransaction transaction = new InsertCashTransaction(NewTransactionID(), user, DateTime.Now, amount);
             ExecuteTransaction(transaction);
         }
@@ -41,8 +40,22 @@ namespace StregSystemProject
                 Console.WriteLine(transaction.ToString());
 
                 AllTransactions.Add(transaction);
+
+                using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
+                    transaction.LogTransaction(transaction.ToString(), w);
+                    
             }
             catch (ArgumentException e)
+            {
+                //TODO send to communication class
+                Console.WriteLine(e.Message);
+            }
+            catch (InsufficientCreditsException e)
+            {
+                //TODO send to communication class
+                Console.WriteLine(e.Message);
+            }
+            catch (ProductInactiveException e)
             {
                 //TODO send to communication class
                 Console.WriteLine(e.Message);
@@ -67,9 +80,21 @@ namespace StregSystemProject
                 //If product id is larger than zero
                 if( int.Parse(split[0]) > 0)
                 {
-                    AllProducts.Add(new Product(int.Parse(split[0]),  split[1], int.Parse(split[2]), true, false));
-
-                    //AllProducts.Add(new Product(int.Parse(split[0]), split[2], int.Parse(split[3]), IntToBool(int.Parse(split[4])), false));
+                    try
+                    {
+                        AllProducts.Add(new Product(int.Parse(split[0]), split[1], int.Parse(split[2]), IntToBool(int.Parse(split[3])), false));
+                    }
+                    catch (ArgumentOutOfRangeException e)
+                    {
+                        //TODO Send to comm class
+                        Console.WriteLine(e.Message);
+                    }
+                    catch ( ArgumentNullException e)
+                    {
+                        //TODO send to comm class
+                        Console.WriteLine(e.Message);
+                    }
+                    
                 }
             }
         }
@@ -86,9 +111,31 @@ namespace StregSystemProject
         {
             s = s.Trim(new char[] { '"' });
 
-
             return s;
         }
+
+        public Product GetProduct(int id)
+        {
+            foreach (Product p in AllProducts)
+            {
+                if (p.ProductID == id)
+                    return p;
+            }
+
+            throw new ProductNotFoundException("Product with id " + id + " not found");
+        }
+
+        public User GetUser(string username)
+        {
+            foreach (User u in AllUsers)
+            {
+                if (u.Username == username)
+                    return u;
+            }
+            throw new UserNotFoundException("No user found with username: " + username);
+        }
+
+
 
     }
 }
