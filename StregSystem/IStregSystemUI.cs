@@ -8,17 +8,15 @@ namespace StregSystemProject
 {
     interface IStregSystemUI
     {
-        /*
-        void DisplayUserNotFound(User u);
-        void DisplayProductNotFound(...);
-        void DisplayUserInfo(...);
-        void DisplayTooManyArgumentsError(...);
-        void DisplayAdminCommandNotFoundMessage(...);
+        void DisplayUserNotFound(string username);
+        void DisplayProductNotFound();
+        void DisplayUserInfo(User u);
+        void DisplayTooManyArgumentsError(string args);
+        void DisplayAdminCommandNotFoundMessage(string args);
         void DisplayUserBuysProduct(BuyTransaction transaction);
-        void DisplayUserBuysProduct(int count, ...);
+        void DisplayUserBuysProduct(int count, Product p);
         void Close();
-        void DisplayInsufficientCash(...);
+        void DisplayInsufficientCash(User u);
         void DisplayGeneralError(string errorString);
-         * */
     }
 }

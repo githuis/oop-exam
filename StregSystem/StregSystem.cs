@@ -16,7 +16,7 @@ namespace StregSystemProject
 
         public StregSystem()
         {
-
+            AllUsers = new List<User>();
             AllProducts = new List<Product>();
             LoadProdutcs();
         }
@@ -49,15 +49,16 @@ namespace StregSystemProject
             }
             catch (ArgumentException e)
             {
-                StregSystemCLI.PrintError(e.Message);
+                StregSystemCLI.CLI.DisplayGeneralError(e.Message);
             }
             catch (InsufficientCreditsException e)
             {
-                StregSystemCLI.PrintError(e.Message);
+                StregSystemCLI.CLI.DisplayInsufficientCash(transaction.TransUser);
             }
             catch (ProductInactiveException e)
             {
-                StregSystemCLI.PrintError(e.Message);
+
+                //StregSystemCLI.DisplayGeneralError(e.Message);
             }
         }
 
@@ -85,11 +86,11 @@ namespace StregSystemProject
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
-                        StregSystemCLI.PrintError(e.Message);
+                        //StregSystemCLI.DisplayGeneralError(e.Message);
                     }
                     catch (ArgumentNullException e)
                     {
-                        StregSystemCLI.PrintError(e.Message);
+                        //StregSystemCLI.DisplayGeneralError(e.Message);
                     }
                 }
             }
