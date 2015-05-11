@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StregSystemProject
 {
-    abstract class Transaction
+    abstract class Transaction : IComparable
     {
         private int _transactionID;
         private User _transUser;
@@ -60,5 +60,16 @@ namespace StregSystemProject
             w.WriteLine("");
         }
 
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            Transaction otherTrans = obj as Transaction;
+            if (otherTrans != null)
+                return this.TransactionID.CompareTo(otherTrans.TransactionID);
+            else
+                throw new ArgumentException("Objektet er ikke af type 'Transction'");
+        }
     }
 }

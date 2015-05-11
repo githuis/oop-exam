@@ -51,6 +51,7 @@ namespace StregSystemProject
 
         public void DisplayUserInfo(User u)
         {
+            List<Transaction> t;
             Console.WriteLine("*------------------------------");
             Console.WriteLine("* ID: " + u.UserID);
             Console.WriteLine("* Username: " + u.Username);
@@ -58,6 +59,11 @@ namespace StregSystemProject
             Console.WriteLine("* E-mail: " + u.Email);
             Console.WriteLine("* Balance: " + u.Balance);
             Console.WriteLine("*------------------------------");
+
+            t = Sys.GetTransactionList(u);
+            //if(t.)
+            
+            
         }
 
         public void DisplayTooManyArgumentsError(string args)
