@@ -61,7 +61,18 @@ namespace StregSystemProject
             Console.WriteLine("*------------------------------");
 
             t = Sys.GetTransactionList(u);
-            //if(t.)
+            t.Sort();
+
+            if (t.Count == 0)
+                Console.WriteLine("User has no transactions");
+            else if (t.Count > 11)
+                t.ForEach(Console.WriteLine);
+            else
+                for (int i = 0; i < 9; i++)
+                {
+                    Console.WriteLine(t[i]);
+                }
+
             
             
         }

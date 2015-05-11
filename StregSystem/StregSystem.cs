@@ -137,7 +137,7 @@ namespace StregSystemProject
             if (list.Count != 0)
                 return list;
             else
-                throw new TransactionNotFoundException("No transactions found for user " + u.Username);
+                throw new TransactionNotFoundException(u.Username);
         }
 
         public List<Transaction> GetTransactionList(string username)
@@ -152,7 +152,7 @@ namespace StregSystemProject
             if (list.Count != 0)
                 return list;
             else
-                throw new TransactionNotFoundException("No transactions found for user " + username);
+                throw new TransactionNotFoundException(username);
         }
 
         public List<Transaction> GetTransactionList(User u, DateTime from, DateTime to)
