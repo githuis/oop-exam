@@ -23,7 +23,7 @@ namespace StregSystemProject
 
         StregSystemCLI()
         {
-
+            
         }
 
         public void GetRef(StregSystem sy)
@@ -34,25 +34,19 @@ namespace StregSystemProject
         public void DisplayUserNotFound(string username)
         {
             Error();
-            Console.WriteLine("No user found with username: [" + username +"]");
+            Console.WriteLine("Ingen bruger med brugernavn[" + username +"]");
         }
 
-        public void DisplayProductNotFound()
+        public void DisplayProductNotFound(string id)
         {
             Error();
-            Console.WriteLine("Product not found");
-        }
-
-        public void DisplayProductNotFound(int id)
-        {
-            Error();
-            Console.WriteLine("No product with id [" + id + "] found");
+            Console.WriteLine("Intet produkt med id [" + id + "] fundet");
         }
 
         public void DisplayProductInactive()
         {
             Error();
-            Console.WriteLine("Attempted to buy an inactive product");
+            Console.WriteLine("Forsøgte at købe inaktivt produkt");
         }
 
         public void DisplayUserInfo(User u)
@@ -69,13 +63,13 @@ namespace StregSystemProject
         public void DisplayTooManyArgumentsError(string args)
         {
             Error();
-            Console.WriteLine( "[" + args + "] contains too many arguments for this command");
+            Console.WriteLine( "[" + args + "] for mange argumenter til denne kommando");
         }
 
         public void DisplayAdminCommandNotFoundMessage(string args)
         {
             Error();
-            Console.WriteLine("[" + args + "] is not a valid argument command");
+            Console.WriteLine("[" + args + "] er ikke en korrekt admin kommando");
             //TODO list valid admin commands?
         }
 
@@ -86,24 +80,26 @@ namespace StregSystemProject
 
         public void DisplayUserBuysProduct(int count, Product p)
         {
-            Console.WriteLine("Bought " +  count.ToString() + "x " + p.Name);            
+            Console.WriteLine("Købte " +  count.ToString() + "x " + p.Name);            
         }
 
         public void Close()
         {
-            
+            Console.WriteLine("Lukker Program");
+            Console.Read();
+            Environment.Exit(0);
         }
 
         public void DisplayInsufficientCash(User u)
         {
             Error();
-            Console.WriteLine("[" + u.Username + "] Not enough funds to buy product");
+            Console.WriteLine("[" + u.Username + "] Ikke nok penge til at købe produktet");
         }
 
         public void DisplayInsufficientCash(User u, int count)
         {
             Error();
-            Console.WriteLine("[" + u.Username + "] Not enough funds to buy " + count.ToString() + "x product");
+            Console.WriteLine("[" + u.Username + "] Ikke nok penge til at købe " + count.ToString() + "x produkter");
         }
 
         public void DisplayGeneralError(string msg)
@@ -112,9 +108,19 @@ namespace StregSystemProject
             Console.WriteLine( msg);
         }
 
+        public void DisplayReadyForCommand()
+        {
+            Console.Write(">");
+        }
+
         private void Error()
         {
-            Console.Write("ERROR: ");
+            Console.Write("FEJL: ");
+        }
+
+        public void DisplayAddedCreditsToUser(User u, double amount)
+        {
+            Console.WriteLine("Tilføjede " + amount + "kr til bruger [" + u.Username + "]");
         }
     }
 }

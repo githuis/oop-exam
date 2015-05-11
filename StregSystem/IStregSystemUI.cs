@@ -9,7 +9,7 @@ namespace StregSystemProject
     interface IStregSystemUI
     {
         void DisplayUserNotFound(string username);
-        void DisplayProductNotFound();
+        void DisplayProductNotFound(string id);
         void DisplayUserInfo(User u);
         void DisplayTooManyArgumentsError(string args);
         void DisplayAdminCommandNotFoundMessage(string args);
@@ -18,5 +18,7 @@ namespace StregSystemProject
         void Close();
         void DisplayInsufficientCash(User u);
         void DisplayGeneralError(string errorString);
+        void DisplayReadyForCommand();
+        void DisplayAddedCreditsToUser(User u, double amount);
     }
 }

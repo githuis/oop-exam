@@ -58,9 +58,6 @@ namespace StregSystemProject
             w.WriteLine(Date.ToShortDateString() + " " + Date.ToShortTimeString());
             w.WriteLine(logEntry);
             w.WriteLine("");
-
-            Console.WriteLine("Wrote to log");
-
         }
 
     }

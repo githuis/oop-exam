@@ -38,10 +38,6 @@ namespace StregSystemProject
             try
             {
                 transaction.Execute();
-                //TODO Send to communication class
-                Console.WriteLine(transaction.ToString());
-
-                AllTransactions.Add(transaction);
 
                 using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
                     transaction.LogTransaction(transaction.ToString(), w);
@@ -69,7 +65,7 @@ namespace StregSystemProject
 
         private void LoadProdutcs()
         {
-            string[] productLines = File.ReadAllLines(@"Data\products.csv", Encoding.GetEncoding("iso-8859-1"));
+            string[] productLines = File.ReadAllLines( (Directory.GetCurrentDirectory() + "\\Data\\products.csv"), Encoding.GetEncoding("iso-8859-1"));
 
             foreach (string item in productLines)
             {
@@ -82,15 +78,15 @@ namespace StregSystemProject
                 {
                     try
                     {
-                        AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2]), IntToBool(int.Parse(split[3])), false));
+                        AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2])/100, IntToBool(int.Parse(split[3])), false));
                     }
                     catch (ArgumentOutOfRangeException e)
                     {
-                        //StregSystemCLI.DisplayGeneralError(e.Message);
+                        StregSystemCLI.CLI.DisplayGeneralError(e.Message);
                     }
                     catch (ArgumentNullException e)
                     {
-                        //StregSystemCLI.DisplayGeneralError(e.Message);
+                        StregSystemCLI.CLI.DisplayGeneralError(e.Message);
                     }
                 }
             }
@@ -116,7 +112,7 @@ namespace StregSystemProject
                 if (p.ProductID == id)
                     return p;
             }
-            throw new ProductNotFoundException("Product with id " + id + " not found");
+            throw new ProductNotFoundException(id.ToString());
         }
 
         public User GetUser(string username)
@@ -126,7 +122,7 @@ namespace StregSystemProject
                 if (u.Username == username)
                     return u;
             }
-            throw new UserNotFoundException("No user found with username: " + username);
+            throw new UserNotFoundException(username);
         }
 
         public List<Transaction> GetTransactionList(User u)
@@ -187,6 +183,35 @@ namespace StregSystemProject
                 return actives;
             else
                 throw new ProductNotFoundException("No active products found");
+        }
+
+        public Transaction GetLastestTransacion()
+        {          
+            return AllTransactions[AllTransactions.Count-1];
+        }
+
+        public void NewBuyTransaction(User u, Product p)
+        {
+            BuyTransaction b = new BuyTransaction(NewTransactionID(), u, DateTime.Now, p);
+            AllTransactions.Add(b);
+            ExecuteTransaction(b);
+        }
+
+        public void NewInsertCreditTransaction(User u, double amount)
+        {
+            InsertCashTransaction i = new InsertCashTransaction(NewTransactionID(), u, DateTime.Now, amount);
+            AllTransactions.Add(i);
+            ExecuteTransaction(i);
+        }
+
+        public void ChangeProductActive(int id, bool val)
+        {
+            GetProduct(id).Active = val;
+        }
+
+        public void ChangeProductCredit(int id, bool val)
+        {
+            GetProduct(id).CanBeBoughtOnCredit = val;
         }
 
 
