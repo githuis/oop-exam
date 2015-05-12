@@ -34,10 +34,10 @@ namespace StregSystemProject
             _adminCommands.Add(":q", (x, y) => { UI.Close(); });
             _adminCommands.Add(":Q", (x, y) => { UI.Close(); });
             _adminCommands.Add(":quit", (x, y) => { UI.Close(); });
-            _adminCommands.Add(":activate", (x, y) => { Sys.ChangeProductActive(x, true); });
-            _adminCommands.Add(":deactivate", (x, y) => { Sys.ChangeProductActive(x, false); });
-            _adminCommands.Add(":crediton", (x, y) => { Sys.ChangeProductCredit(x, true); });
-            _adminCommands.Add(":creditoff", (x, y) => { Sys.ChangeProductCredit(x, false); });
+            _adminCommands.Add(":activate", (x, y) => { Sys.ChangeProductActive(x, true); ((StregSystemCLI)UI).DisplayActivation(x, true); });
+            _adminCommands.Add(":deactivate", (x, y) => { Sys.ChangeProductActive(x, false); ((StregSystemCLI)UI).DisplayActivation(x, false); });
+            _adminCommands.Add(":crediton", (x, y) => { Sys.ChangeProductCredit(x, true); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
+            _adminCommands.Add(":creditoff", (x, y) => { Sys.ChangeProductCredit(x, false); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
             _adminCommands.Add(":addcredits", (x, y) => { Sys.AddCreditsToUser(Sys.GetUser(x), y); UI.DisplayAddedCreditsToUser(Sys.GetUser(x), y); });
 
             try
@@ -53,8 +53,7 @@ namespace StregSystemProject
                 UI.DisplayGeneralError(e.Message);
             }
 
-
-            GetReadyForInput();
+            Start();
         }
 
         public void ParseCommand(string command)
@@ -214,7 +213,7 @@ namespace StregSystemProject
             }
         }
 
-        private void GetReadyForInput()
+        private void Start()
         {
             UI.DisplayReadyForCommand();
             ParseCommand(Console.ReadLine());
@@ -224,7 +223,7 @@ namespace StregSystemProject
             Console.ReadKey();
 
 
-            GetReadyForInput();
+            Start();
         }
     }
 }

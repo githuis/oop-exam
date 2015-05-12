@@ -37,7 +37,6 @@ namespace StregSystemProject
             _seasonEndDate = end;
         }
 
-
         public SeasonalProduct(int id, string name, int price, bool active, bool canCredit, DateTime start, DateTime end) 
             : base(id, name, price, active, canCredit)
         {

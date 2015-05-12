@@ -74,7 +74,6 @@ namespace StregSystemProject
         {
             Error();
             Console.WriteLine("[" + args + "] is not a valid admin commando");
-            //TODO list valid admin commands?
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
@@ -112,7 +111,7 @@ namespace StregSystemProject
         public void DisplayGeneralError(string msg)
         {
             Error();
-            Console.WriteLine( msg);
+            Console.WriteLine(msg);
         }
 
         public void DisplayReadyForCommand()
@@ -170,6 +169,16 @@ namespace StregSystemProject
             Console.WriteLine("> <Username> <Product id>" + "\n\tPurchase product with stated id\n");
             Console.WriteLine("> <Username> <Amount> <Product id>" + "\n\tPurchase product wiht stated id <Amount> times\n");
             Console.WriteLine("For administrative commands, please contact your systems admin");
+        }
+
+        public void DisplayActivation(int id, bool val)
+        {
+                Console.WriteLine("Product with id [" + id + "] was " + (val ? "activated" : "deactivated" ));
+        }
+
+        public void DisplayCreditChange(int id, bool val)
+        {
+            Console.WriteLine("Product with id [" + id + "] " + (val ? "may" : "cannot") + " be bought on credit now");
         }
     }
 }
