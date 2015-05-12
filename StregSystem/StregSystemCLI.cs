@@ -6,27 +6,16 @@ using System.Threading.Tasks;
 
 namespace StregSystemProject
 {
-    sealed class StregSystemCLI : IStregSystemUI
+    class StregSystemCLI : IStregSystemUI
     {
-        static readonly StregSystemCLI _instance = new StregSystemCLI();
-        private StregSystem _sys;
-
-        public static StregSystemCLI CLI
-        {
-            get { return _instance; }
-        }        
+        private StregSystem _sys;      
 
         public StregSystem Sys 
         {
             get { return _sys; }
         }
 
-        StregSystemCLI()
-        {
-            
-        }
-
-        public void GetRef(StregSystem sy)
+        public StregSystemCLI(StregSystem sy)
         {
             _sys = sy;
         }
@@ -34,19 +23,19 @@ namespace StregSystemProject
         public void DisplayUserNotFound(string username)
         {
             Error();
-            Console.WriteLine("Ingen bruger med brugernavn[" + username +"]");
+            Console.WriteLine("No user with username [" + username +"] found");
         }
 
         public void DisplayProductNotFound(string id)
         {
             Error();
-            Console.WriteLine("Intet produkt med id [" + id + "] fundet");
+            Console.WriteLine("Intet produkt med id [" + id + "] found");
         }
 
         public void DisplayProductInactive()
         {
             Error();
-            Console.WriteLine("Forsøgte at købe inaktivt produkt");
+            Console.WriteLine("Attempted to purchase inacctive product");
         }
 
         public void DisplayUserInfo(User u)
@@ -59,50 +48,53 @@ namespace StregSystemProject
             Console.WriteLine("* E-mail: " + u.Email);
             Console.WriteLine("* Balance: " + u.Balance);
             Console.WriteLine("*------------------------------");
+            if(u.Balance < 50)
+                DisplayBalanceBelowFifty();
 
+            int i = 0;
             t = Sys.GetTransactionList(u);
-            t.Sort();
-
-            if (t.Count == 0)
-                Console.WriteLine("User has no transactions");
-            else if (t.Count > 11)
-                t.ForEach(Console.WriteLine);
+            var tl = t.OrderByDescending(x => x.TransactionID);
+            t = tl.ToList();
+            Console.WriteLine("Last transactions:");
+            if (t.Count > 10)
+                for (i = 0; i < 11; i++)                    
+                    Console.WriteLine(i.ToString() + ". " + t[i].ToString());                    
             else
-                for (int i = 0; i < 9; i++)
-                {
-                    Console.WriteLine(t[i]);
-                }
-
-            
+                foreach (var tran in t)
+                    Console.WriteLine((++i).ToString() + ". " + tran.ToString());
             
         }
 
         public void DisplayTooManyArgumentsError(string args)
         {
             Error();
-            Console.WriteLine( "[" + args + "] for mange argumenter til denne kommando");
+            Console.WriteLine( "[" + args + "] too many arguments for this command");
         }
 
         public void DisplayAdminCommandNotFoundMessage(string args)
         {
             Error();
-            Console.WriteLine("[" + args + "] er ikke en korrekt admin kommando");
+            Console.WriteLine("[" + args + "] is not a valid admin commando");
             //TODO list valid admin commands?
         }
 
         public void DisplayUserBuysProduct(BuyTransaction transaction)
         {
             Console.WriteLine(transaction.ToString());
+            if(transaction.TransUser.Balance < 50)
+                DisplayBalanceBelowFifty();
         }
 
-        public void DisplayUserBuysProduct(int count, Product p)
+        public void DisplayUserBuysProduct(int count, Product p, User u)
         {
-            Console.WriteLine("Købte " +  count.ToString() + "x " + p.Name);            
+            Console.WriteLine("[" + u.Username + "] Bought " +  count.ToString() + "x " + p.Name + "for " + (p.Price * (double) count).ToString() + "kr" );
+            if (u.Balance < 50)
+                DisplayBalanceBelowFifty();
         }
 
         public void Close()
         {
-            Console.WriteLine("Lukker Program");
+            Console.WriteLine("Shutting down");
             Console.Read();
             Environment.Exit(0);
         }
@@ -110,13 +102,13 @@ namespace StregSystemProject
         public void DisplayInsufficientCash(User u)
         {
             Error();
-            Console.WriteLine("[" + u.Username + "] Ikke nok penge til at købe produktet");
+            Console.WriteLine("[" + u.Username + "] Not enough credit to purchase product");
         }
 
         public void DisplayInsufficientCash(User u, int count)
         {
             Error();
-            Console.WriteLine("[" + u.Username + "] Ikke nok penge til at købe " + count.ToString() + "x produkter");
+            Console.WriteLine("[" + u.Username + "] Not enough credit to purchase " + count.ToString() + "x products");
         }
 
         public void DisplayGeneralError(string msg)
@@ -127,17 +119,43 @@ namespace StregSystemProject
 
         public void DisplayReadyForCommand()
         {
-            Console.Write(">");
+            System.Console.Clear();
+            DisplayActiveProducts();
+            Console.Write("\n>");
         }
 
         private void Error()
         {
-            Console.Write("FEJL: ");
+            Console.Write("ERROR: ");
         }
 
         public void DisplayAddedCreditsToUser(User u, double amount)
         {
-            Console.WriteLine("Tilføjede " + amount + "kr til bruger [" + u.Username + "]");
+            Console.WriteLine("Added " + amount + "kr to user [" + u.Username + "]");
+        }
+
+        private void DisplayBalanceBelowFifty()
+        {
+            Console.WriteLine("Please note that your balance is below 50kr!");
+        }
+
+        private void DisplayActiveProducts()
+        {
+            Console.WriteLine(string.Format("{0, -4}|{1, 6} - {2}", "ID", "Price", "Product"));
+            foreach (Product p in Sys.GetActiveProducts())
+            {
+                Console.WriteLine(p.ToString());
+            }
+        }
+
+        public void DisplayEnterToCont()
+        {
+            Console.WriteLine("\nPress enter to return to menu");
+        }
+
+        public void DisplayTransactionNotFound(string username)
+        {
+            Console.WriteLine("No transactions found for user [" +username+"]");
         }
     }
 }

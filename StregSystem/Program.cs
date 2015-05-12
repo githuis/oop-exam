@@ -10,21 +10,14 @@ namespace StregSystemProject
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Start");
             StregSystem sys = new StregSystem();
-            Console.WriteLine("One");
-            StregSystemCLI.CLI.GetRef(sys);
-            Console.WriteLine("Two");
-            
+            IStregSystemUI cli = new StregSystemCLI(sys);
             User per = new User("Per", "yo", "-zh_-e.x@l-i_-ve.dk");
             per.Balance += 700;
             sys.AllUsers.Add(per);
-            foreach (var item in sys.AllProducts)
-            {
-                Console.WriteLine(item.ToString());
-            }
+            
 
-            CommandParser cmd = new CommandParser(StregSystemCLI.CLI, sys);
+            CommandParser cmd = new CommandParser(cli, sys);
 
             
 
@@ -34,8 +27,7 @@ namespace StregSystemProject
 
             
 
-            
-            //sys.AllProducts.ForEach(Console.WriteLine);
+           
 
             Console.WriteLine("Exit");
             Console.Read();

@@ -18,7 +18,6 @@ namespace StregSystemProject
         {
             AllUsers = new List<User>();
             AllProducts = new List<Product>();
-            LoadProdutcs();
         }
 
         public void BuyProduct(User user, Product product)
@@ -35,27 +34,11 @@ namespace StregSystemProject
 
         private void ExecuteTransaction(Transaction transaction)
         {
-            try
-            {
-                transaction.Execute();
+            transaction.Execute();
 
-                using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
-                    transaction.LogTransaction(transaction.ToString(), w);
+            using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
+                transaction.LogTransaction(transaction.ToString(), w);
 
-            }
-            catch (ArgumentException e)
-            {
-                StregSystemCLI.CLI.DisplayGeneralError(e.Message);
-            }
-            catch (InsufficientCreditsException e)
-            {
-                StregSystemCLI.CLI.DisplayInsufficientCash(transaction.TransUser);
-            }
-            catch (ProductInactiveException e)
-            {
-
-                //StregSystemCLI.DisplayGeneralError(e.Message);
-            }
         }
 
         private int NewTransactionID()
@@ -63,7 +46,7 @@ namespace StregSystemProject
             return AllTransactions.Count();
         }
 
-        private void LoadProdutcs()
+        public void LoadProdutcs()
         {
             string[] productLines = File.ReadAllLines( (Directory.GetCurrentDirectory() + "\\Data\\products.csv"), Encoding.GetEncoding("iso-8859-1"));
 
@@ -76,18 +59,7 @@ namespace StregSystemProject
                 //If product id is larger than zero
                 if (int.Parse(split[0]) > 0)
                 {
-                    try
-                    {
-                        AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2])/100, IntToBool(int.Parse(split[3])), false));
-                    }
-                    catch (ArgumentOutOfRangeException e)
-                    {
-                        StregSystemCLI.CLI.DisplayGeneralError(e.Message);
-                    }
-                    catch (ArgumentNullException e)
-                    {
-                        StregSystemCLI.CLI.DisplayGeneralError(e.Message);
-                    }
+                    AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2])/100, IntToBool(int.Parse(split[3])), false));
                 }
             }
         }
@@ -117,6 +89,8 @@ namespace StregSystemProject
 
         public User GetUser(string username)
         {
+            if (username == "" || username == null)
+                throw new UserNotFoundException("");
             foreach (User u in AllUsers)
             {
                 if (u.Username == username)

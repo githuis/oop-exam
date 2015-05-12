@@ -67,7 +67,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return ProductID + " - " + Name;
+            return string.Format("{0, -4}|{1, 6} - {2}",ProductID.ToString(), (Price.ToString()+"kr"), Name);
         }
     }
 }

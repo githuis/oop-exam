@@ -131,7 +131,7 @@ namespace StregSystemProject
 
         private string GenerateUsername(string name, int num)
         {
-            return name.ToLower() + "_" + num;
+            return name.ToLower() + num.ToString();
         }
 
         private bool ValidEmail(string mail)

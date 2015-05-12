@@ -69,7 +69,7 @@ namespace StregSystemProject
             if (otherTrans != null)
                 return this.TransactionID.CompareTo(otherTrans.TransactionID);
             else
-                throw new ArgumentException("Objektet er ikke af type 'Transction'");
+                throw new ArgumentException("Object is not of type 'Transction'");
         }
     }
 }

@@ -14,11 +14,13 @@ namespace StregSystemProject
         void DisplayTooManyArgumentsError(string args);
         void DisplayAdminCommandNotFoundMessage(string args);
         void DisplayUserBuysProduct(BuyTransaction transaction);
-        void DisplayUserBuysProduct(int count, Product p);
+        void DisplayUserBuysProduct(int count, Product p, User u);
         void Close();
         void DisplayInsufficientCash(User u);
         void DisplayGeneralError(string errorString);
         void DisplayReadyForCommand();
         void DisplayAddedCreditsToUser(User u, double amount);
+        void DisplayProductInactive();
+        void DisplayTransactionNotFound(string username);
     }
 }

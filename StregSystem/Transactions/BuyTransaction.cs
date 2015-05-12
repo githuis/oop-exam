@@ -22,7 +22,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return TransUser.Firstname + " købte " + TransProduct.Name + " for " + Amount.ToString() + "kr d. " + Date.ToShortDateString();
+            return TransUser.Firstname + " bought " + TransProduct.Name + " for " + Amount.ToString() + "kr d. " + Date.ToShortDateString();
         }
 
         public override void Execute()
@@ -33,6 +33,7 @@ namespace StregSystemProject
                     TransUser.Balance -= TransProduct.Price;
                 else if (TransUser.Balance >= TransProduct.Price)
                     TransUser.Balance -= TransProduct.Price;
+                    
                 else
                     throw new InsufficientCreditsException("Not enough money on account to buy " + TransProduct.Name);
             }
