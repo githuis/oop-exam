@@ -32,6 +32,7 @@ namespace StregSystemProject
 
             _adminCommands = new Dictionary<string, Action<dynamic, dynamic>>();
             _adminCommands.Add(":q", (x, y) => { UI.Close(); });
+            _adminCommands.Add(":Q", (x, y) => { UI.Close(); });
             _adminCommands.Add(":quit", (x, y) => { UI.Close(); });
             _adminCommands.Add(":activate", (x, y) => { Sys.ChangeProductActive(x, true); });
             _adminCommands.Add(":deactivate", (x, y) => { Sys.ChangeProductActive(x, false); });
@@ -89,8 +90,6 @@ namespace StregSystemProject
                         }
                         else
                             product = Sys.GetProduct(int.Parse(split[1]));
-
-                        Console.WriteLine(product.ProductID);
 
                         for (int i = 0; i < numOfProducts; i++)                        
                             Sys.NewBuyTransaction(user, product);
