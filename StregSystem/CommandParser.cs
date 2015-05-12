@@ -65,7 +65,9 @@ namespace StregSystemProject
             int numOfProducts = 1;
             if (command == "" || command == null || split[0] == " ")
                 return;
-   
+            
+
+
             if(!command.IsAdminCommand()) //User Commands
             {
                 if(command.IsBuyCommand())
@@ -91,11 +93,17 @@ namespace StregSystemProject
                         else
                             product = Sys.GetProduct(int.Parse(split[1]));
 
-                        for (int i = 0; i < numOfProducts; i++)                        
-                            Sys.NewBuyTransaction(user, product);
+                        if (user.Balance >= numOfProducts * product.Price)
+                            for (int i = 0; i < numOfProducts; i++)
+                                Sys.NewBuyTransaction(user, product);
+                        else
+                        {
+                            UI.DisplayInsufficientCash(user);
+                            return;
+                        }
 
                         if (numOfProducts == 1)
-                        UI.DisplayUserBuysProduct((BuyTransaction) Sys.GetLastestTransacion());
+                            UI.DisplayUserBuysProduct((BuyTransaction) Sys.GetLastestTransacion());
                         else if (numOfProducts > 1)
                             UI.DisplayUserBuysProduct(numOfProducts, product, user);  
                         
@@ -135,6 +143,10 @@ namespace StregSystemProject
                     {
                         UI.DisplayTransactionNotFound(e.Message);
                     }
+                    catch (OverflowException e)
+                    {
+                        UI.DisplayGeneralError(e.Message);
+                    }
                 }
             }
 
@@ -147,7 +159,8 @@ namespace StregSystemProject
                 comm = split[0];
                 if (split.Length > 1)
                 {
-                    if (int.TryParse(split[1], out arg1))
+                    
+                    if (int.TryParse(split[1], out arg1) && !Sys.UserExists(split[1]))
                         firstArgIsInt = true;
                     else
                         strArg1 = split[1];

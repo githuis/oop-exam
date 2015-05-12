@@ -53,8 +53,7 @@ namespace StregSystemProject
 
             int i = 0;
             t = Sys.GetTransactionList(u);
-            var tl = t.OrderByDescending(x => x.TransactionID);
-            t = tl.ToList();
+            t = t.OrderByDescending(x => x.TransactionID).ToList();
             Console.WriteLine("Last transactions:");
             if (t.Count > 10)
                 for (i = 0; i < 11; i++)                    
@@ -141,7 +140,8 @@ namespace StregSystemProject
 
         private void DisplayActiveProducts()
         {
-            Console.WriteLine(string.Format("{0, -4}|{1, 6} - {2}", "ID", "Price", "Product"));
+            Console.Write(string.Format("{0, -4}|{1, 6} - {2}", "ID", "Price", "Product"));
+            DisplayHelpOptions();
             foreach (Product p in Sys.GetActiveProducts())
             {
                 Console.WriteLine(p.ToString());
@@ -156,6 +156,11 @@ namespace StregSystemProject
         public void DisplayTransactionNotFound(string username)
         {
             Console.WriteLine("No transactions found for user [" +username+"]");
+        }
+
+        private void DisplayHelpOptions()
+        {
+            Console.WriteLine("\t\tEnter ? for help");
         }
     }
 }

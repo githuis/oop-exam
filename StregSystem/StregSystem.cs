@@ -99,6 +99,20 @@ namespace StregSystemProject
             throw new UserNotFoundException(username);
         }
 
+        public bool UserExists(string username)
+        {
+            if (username == "" || username == null)
+                return false;
+
+            foreach (User u in AllUsers)
+            {
+                if (u.Username == username)
+                    return true;
+            }
+
+            return false;
+        }
+
         public List<Transaction> GetTransactionList(User u)
         {
             List<Transaction> list = new List<Transaction>();
