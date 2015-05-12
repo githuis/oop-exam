@@ -120,13 +120,13 @@ namespace StregSystemProject
             if (obj == null || !(obj is User))
                 return false;
             else
-                return UserID == ((User)obj).UserID;
+                return Username == ((User)obj).Username;
         }
 
         public override int GetHashCode()
         {
-            //8 is an arbitrary number, but it is the same for every instance of user, which is the important part.
-            return this.UserID.GetHashCode() * 16 + this.Username.GetHashCode();
+            //16 is an arbitrary number, but it is the same for every instance of User, which is the important part.
+            return this.Username.GetHashCode() * 16;
         }
 
         private string GenerateUsername(string name, int num)

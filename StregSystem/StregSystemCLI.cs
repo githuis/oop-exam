@@ -86,7 +86,7 @@ namespace StregSystemProject
 
         public void DisplayUserBuysProduct(int count, Product p, User u)
         {
-            Console.WriteLine("[" + u.Username + "] Bought " +  count.ToString() + "x " + p.Name + "for " + (p.Price * (double) count).ToString() + "kr" );
+            Console.WriteLine("[" + u.Username + "] Bought " +  count.ToString() + "x " + p.Name + " for " + (p.Price * (double) count).ToString() + "kr" );
             if (u.Balance < 50)
                 DisplayBalanceBelowFifty();
         }
@@ -94,7 +94,6 @@ namespace StregSystemProject
         public void Close()
         {
             Console.WriteLine("Shutting down");
-            Console.Read();
             Environment.Exit(0);
         }
 
@@ -140,7 +139,7 @@ namespace StregSystemProject
 
         private void DisplayActiveProducts()
         {
-            Console.Write(string.Format("{0, -4}|{1, 6} - {2}", "ID", "Price", "Product"));
+            Console.Write(string.Format("{0, -4}|{1, 7} - {2}", "ID", "Price", "Product"));
             DisplayHelpOptions();
             foreach (Product p in Sys.GetActiveProducts())
             {
@@ -160,7 +159,17 @@ namespace StregSystemProject
 
         private void DisplayHelpOptions()
         {
-            Console.WriteLine("\t\tEnter ? for help");
+            Console.WriteLine(" (? for help)");
+        }
+
+        public void DisplayHelp()
+        {
+            Console.WriteLine("Commands are as follows: (without <>)");
+            Console.WriteLine("> ?" + "\n\tDisplays this\n");
+            Console.WriteLine("> <Username>" + "\n\tDisplays User statistics\n");
+            Console.WriteLine("> <Username> <Product id>" + "\n\tPurchase product with stated id\n");
+            Console.WriteLine("> <Username> <Amount> <Product id>" + "\n\tPurchase product wiht stated id <Amount> times\n");
+            Console.WriteLine("For administrative commands, please contact your systems admin");
         }
     }
 }

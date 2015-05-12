@@ -63,11 +63,18 @@ namespace StregSystemProject
             User user = null;
             Product product;
             int numOfProducts = 1;
-            if (command == "" || command == null || split[0] == " ")
+            if (command == "" || command == " " || command == "  " || command == null || split[0] == " ")
+            {
+                UI.DisplayGeneralError("No command entered");
                 return;
-            
+            }
 
-
+            if (command == "?")
+            {
+                ((StregSystemCLI)UI).DisplayHelp();
+                return;
+            }
+                
             if(!command.IsAdminCommand()) //User Commands
             {
                 if(command.IsBuyCommand())
@@ -84,8 +91,11 @@ namespace StregSystemProject
 
                         if (command.ContainsAmount())
                         {
-                            if(split[1] == " " || split[2] == " ")
+                            if(split[1] == " " || split[1] == "" || split[2] == " " || split[2] == "")
+                            {
+                                UI.DisplayTooManyArgumentsError(command);
                                 return;
+                            }
 
                             product = Sys.GetProduct(int.Parse(split[2]));
                             numOfProducts = int.Parse(split[1]);
@@ -93,9 +103,12 @@ namespace StregSystemProject
                         else
                             product = Sys.GetProduct(int.Parse(split[1]));
 
-                        if (user.Balance >= numOfProducts * product.Price)
+                        if (user.Balance >= numOfProducts * product.Price && !product.CanBeBoughtOnCredit)
                             for (int i = 0; i < numOfProducts; i++)
-                                Sys.NewBuyTransaction(user, product);
+                                Sys.BuyProduct(user, product);
+                        else if (product.CanBeBoughtOnCredit)
+                            for (int i = 0; i < numOfProducts; i++)
+                                Sys.BuyProduct(user, product);
                         else
                         {
                             UI.DisplayInsufficientCash(user);
@@ -131,7 +144,7 @@ namespace StregSystemProject
                         else
                             UI.DisplayGeneralError(e.Message);
                     }
-                    catch (ProductInactiveException e)
+                    catch (ProductInactiveException)
                     {
                         UI.DisplayProductInactive();
                     }                 
@@ -168,15 +181,20 @@ namespace StregSystemProject
                     
                 if (split.Length == 3)
                     int.TryParse(split[2], out arg2);
+                else if (split.Length >= 4)
+                {
+                    UI.DisplayTooManyArgumentsError(command);
+                    return;
+                }
 
                 try
                 {
                     if (firstArgIsInt)
-                        _adminCommands[split[0]](arg1, arg2);
+                        _adminCommands[comm](arg1, arg2);
                     else
-                        _adminCommands[split[0]](strArg1, arg2);
+                        _adminCommands[comm](strArg1, arg2);
                 }
-                catch (KeyNotFoundException e)
+                catch (KeyNotFoundException)
                 {
                     UI.DisplayAdminCommandNotFoundMessage(command);
                 }
@@ -200,10 +218,13 @@ namespace StregSystemProject
         {
             UI.DisplayReadyForCommand();
             ParseCommand(Console.ReadLine());
+
+            //Wait for a keypress to continue
             ((StregSystemCLI)UI).DisplayEnterToCont();
             Console.ReadKey();
+
+
             GetReadyForInput();
         }
-
     }
 }

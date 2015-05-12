@@ -16,19 +16,21 @@ namespace StregSystemProject
 
         public StregSystem()
         {
-            AllUsers = new List<User>();
+            AllUsers = User.All;
             AllProducts = new List<Product>();
         }
 
         public void BuyProduct(User user, Product product)
         {
             BuyTransaction transaction = new BuyTransaction(NewTransactionID(), user, DateTime.Now, product);
+            AllTransactions.Add(transaction);
             ExecuteTransaction(transaction);
         }
 
         public void AddCreditsToUser(User user, double amount)
         {
             InsertCashTransaction transaction = new InsertCashTransaction(NewTransactionID(), user, DateTime.Now, amount);
+            AllTransactions.Add(transaction);
             ExecuteTransaction(transaction);
         }
 
@@ -38,7 +40,6 @@ namespace StregSystemProject
 
             using (StreamWriter w = File.AppendText(@"Data\Log.txt"))
                 transaction.LogTransaction(transaction.ToString(), w);
-
         }
 
         private int NewTransactionID()
@@ -59,7 +60,7 @@ namespace StregSystemProject
                 //If product id is larger than zero
                 if (int.Parse(split[0]) > 0)
                 {
-                    AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), int.Parse(split[2])/100, IntToBool(int.Parse(split[3])), false));
+                    AllProducts.Add(new Product(int.Parse(split[0]), StripString(split[1]), double.Parse(split[2])/100, IntToBool(int.Parse(split[3])), false));
                 }
             }
         }
@@ -176,20 +177,6 @@ namespace StregSystemProject
         public Transaction GetLastestTransacion()
         {          
             return AllTransactions[AllTransactions.Count-1];
-        }
-
-        public void NewBuyTransaction(User u, Product p)
-        {
-            BuyTransaction b = new BuyTransaction(NewTransactionID(), u, DateTime.Now, p);
-            AllTransactions.Add(b);
-            ExecuteTransaction(b);
-        }
-
-        public void NewInsertCreditTransaction(User u, double amount)
-        {
-            InsertCashTransaction i = new InsertCashTransaction(NewTransactionID(), u, DateTime.Now, amount);
-            AllTransactions.Add(i);
-            ExecuteTransaction(i);
         }
 
         public void ChangeProductActive(int id, bool val)

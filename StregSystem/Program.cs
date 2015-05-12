@@ -12,7 +12,7 @@ namespace StregSystemProject
         {
             StregSystem sys = new StregSystem();
             IStregSystemUI cli = new StregSystemCLI(sys);
-            User per = new User("Per", "0", "-zh_-e.x@l-i_-ve.dk");
+            User per = new User("Per", "Hans", "-zh_-e.x@l-i_-ve.dk");
             per.Balance += 700;
             sys.AllUsers.Add(per);
             

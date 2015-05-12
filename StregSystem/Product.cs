@@ -43,12 +43,12 @@ namespace StregSystemProject
                     _name = value;
             }
         }
-        #endregion
-
+        
         public int ProductID
         {
             get { return _productID; }
         }
+        #endregion
 
         public Product(int id, string name, double price, bool active, bool canCredit)
         {
@@ -67,7 +67,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return string.Format("{0, -4}|{1, 6} - {2}",ProductID.ToString(), (Price.ToString()+"kr"), Name);
+            return string.Format("{0, -4}|{1, 7} - {2}",ProductID.ToString(), (Price.ToString()+"kr"), Name);
         }
     }
 }

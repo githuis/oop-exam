@@ -22,7 +22,7 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return "[" + TransUser.Username + "] bought " + TransProduct.Name + " for " + Amount.ToString() + "kr d. " + Date.ToShortDateString();
+            return "[" + TransUser.Username + "] bought " + TransProduct.Name + " for " + Amount.ToString() + "kr d. " + Date.ToShortDateString() + " T-ID: " + TransactionID;
         }
 
         public override void Execute()
@@ -30,9 +30,9 @@ namespace StregSystemProject
             if (TransProduct.Active)
             {
                 if (TransProduct.CanBeBoughtOnCredit)
-                    TransUser.Balance -= TransProduct.Price;
+                    TransUser.Balance += (TransProduct.Price *-1);
                 else if (TransUser.Balance >= TransProduct.Price)
-                    TransUser.Balance -= TransProduct.Price;
+                    TransUser.Balance += (TransProduct.Price *-1);
                     
                 else
                     throw new InsufficientCreditsException("Not enough money on account to buy " + TransProduct.Name);
