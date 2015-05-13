@@ -49,6 +49,7 @@ namespace StregSystemProject
 
         public void LoadProdutcs()
         {
+            //Endcoding is found on stack overflow. http://stackoverflow.com/questions/8089357/how-to-read-special-character-like-%C3%A9-%C3%A2-and-others-in-c-sharp
             string[] productLines = File.ReadAllLines( (Directory.GetCurrentDirectory() + "\\Data\\products.csv"), Encoding.GetEncoding("iso-8859-1"));
 
             foreach (string item in productLines)

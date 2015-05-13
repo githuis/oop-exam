@@ -21,13 +21,9 @@ namespace StregExtensions
 
             if (split.Length > 3)
                 return false;
-
-            if(split.Length > 2)
-                if(!int.TryParse(split[1], out parsed))            
-                    return false;
          
             if (split.Length == 3)
-                if (!int.TryParse(split[2], out parsed))
+                if (!int.TryParse(split[2], out parsed) || !int.TryParse(split[1], out parsed))
                     return false;
 
             return true;

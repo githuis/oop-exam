@@ -12,10 +12,8 @@ namespace StregSystemProject
         {
             StregSystem sys = new StregSystem();
             IStregSystemUI cli = new StregSystemCLI(sys);
-            User per = new User("Per", "Hans", "-zh_-e.x@l-i_-ve.dk", 700);
-
+            User per = new User("Daniel", "Bol", "dvanbo14@udent.aau.dk", 300);
             CommandParser cmd = new CommandParser(cli, sys);
-
         }
     }
 }

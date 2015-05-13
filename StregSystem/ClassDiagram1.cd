@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="StregSystemProject.InsufficientCreditsException" Collapsed="true">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\InsufficientCreditsException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.ProductInactiveException" Collapsed="true">
+    <Position X="8.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ProductInactiveException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.ProductNotFoundException" Collapsed="true">
+    <Position X="10.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\ProductNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.TransactionNotFoundException" Collapsed="true">
+    <Position X="5.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\TransactionNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.UserNotFoundException" Collapsed="true">
+    <Position X="8.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Exceptions\UserNotFoundException.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.BuyTransaction" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAYAAAAAAAAA=</HashCode>
+      <FileName>Transactions\BuyTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.InsertCashTransaction" Collapsed="true">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Transactions\InsertCashTransaction.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.Transaction" Collapsed="true">
+    <Position X="1.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAgAAAAwABAEAAACgAACAAAABgBBAAAAAAAA=</HashCode>
+      <FileName>Transactions\Transaction.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="StregSystemProject.CommandParser" Collapsed="true">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iEAAAAAAAOAAggAAAIAAAAAAAAAAIAAAAAAAAABAUAA=</HashCode>
+      <FileName>CommandParser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.Product" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EgACIAAAAQAAAAAEAAAAAAQAAAAAACAgAAAQAAAAAAA=</HashCode>
+      <FileName>Product.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.Program" Collapsed="true">
+    <Position X="5.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.SeasonalProduct" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAAAAAAABAAAAAAIAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SeasonalProduct.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.StregSystem" Collapsed="true">
+    <Position X="8.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gQAAAAAAAQAACQAAQAASAAAAoAAAAAAIEEAECCAAAAE=</HashCode>
+      <FileName>StregSystem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StregSystemProject.StregSystemCLI" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="10.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YJAAAAAQAEEAgyAACACAAAAAGCCAACABAAAAgCCCABA=</HashCode>
+      <FileName>StregSystemCLI.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StregSystemProject.User" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="7" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAEAFACABAAQMgQkAAAgAAAgABIAAAIIAAAAAAIE=</HashCode>
+      <FileName>User.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="StregExtensions.StregStringExtensions" Collapsed="true">
+    <Position X="7" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAAAAAAAAAAAAAAAABAAAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Extensions\StregStringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="StregSystemProject.IStregSystemUI" Collapsed="true">
+    <Position X="5.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAAAAEAgCAAAACAAAAACCCAAAABAAAAgACCAAA=</HashCode>
+      <FileName>IStregSystemUI.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

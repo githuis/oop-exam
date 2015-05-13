@@ -40,17 +40,12 @@ namespace StregSystemProject
 
         public void DisplayUserInfo(User u)
         {
-            List<Transaction> t;
-            Console.WriteLine("*------------------------------");
-            Console.WriteLine("* ID: " + u.UserID);
-            Console.WriteLine("* Username: " + u.Username);
-            Console.WriteLine("* Name: " + u.Firstname + " " + u.Lastname);
-            Console.WriteLine("* E-mail: " + u.Email);
-            Console.WriteLine("* Balance: " + u.Balance);
-            Console.WriteLine("*------------------------------");
+
+            PrintUserStats(u);
             if(u.Balance < 50)
                 DisplayBalanceBelowFifty();
 
+            List<Transaction> t;
             int i = 0;
             t = Sys.GetTransactionList(u);
             t = t.OrderByDescending(x => x.TransactionID).ToList();
@@ -62,6 +57,17 @@ namespace StregSystemProject
                 foreach (var tran in t)
                     Console.WriteLine((++i).ToString() + ". " + tran.ToString());
             
+        }
+
+        private void PrintUserStats(User u)
+        {
+            Console.WriteLine("*------------------------------");
+            Console.WriteLine("* ID: " + u.UserID);
+            Console.WriteLine("* Username: " + u.Username);
+            Console.WriteLine("* Name: " + u.Firstname + " " + u.Lastname);
+            Console.WriteLine("* E-mail: " + u.Email);
+            Console.WriteLine("* Balance: " + u.Balance);
+            Console.WriteLine("*------------------------------");
         }
 
         public void DisplayTooManyArgumentsError(string args)

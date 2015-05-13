@@ -15,17 +15,18 @@ namespace StregSystemProject
 
         public override string ToString()
         {
-            return "[" + TransUser.Username + "] added " + Amount.ToString() + "kr d." + Date.ToShortDateString() + " T-ID: " + TransactionID;
+            return "[" + TransUser.Username + "] added " + BoughtFor.ToString() + "kr d." + Date.ToShortDateString() + " T-ID: " + TransactionID;
         }
 
         public override void Execute()
         {
-            if (Amount > 0)
+            if (Amount != 0)
             {
                 TransUser.Balance += Amount;
+                BoughtFor = Amount;
             }
             else
-                throw new ArgumentException("Cannot insert credits zero or less money");
+                throw new ArgumentException("Cannot insert credits zero cash");
         }
     }
 }

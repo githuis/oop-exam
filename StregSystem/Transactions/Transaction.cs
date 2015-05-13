@@ -12,8 +12,15 @@ namespace StregSystemProject
         private User _transUser;
         private DateTime _date;
         private double _amount;
+        protected double _boughtFor;
 
         #region Properties
+        public double BoughtFor 
+        {
+            get { return _boughtFor; }
+            set { _boughtFor = value; }
+        }
+
         public double Amount
         {
             get { return _amount; }

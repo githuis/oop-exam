@@ -31,15 +31,14 @@ namespace StregSystemProject
             _sys = sys;
 
             _adminCommands = new Dictionary<string, Action<dynamic, dynamic>>();
-            _adminCommands.Add(":q", (x, y) => { UI.Close(); });
-            _adminCommands.Add(":Q", (x, y) => { UI.Close(); });
-            _adminCommands.Add(":quit", (x, y) => { UI.Close(); });
-            _adminCommands.Add(":activate", (x, y) => { Sys.ChangeProductActive(x, true); ((StregSystemCLI)UI).DisplayActivation(x, true); });
-            _adminCommands.Add(":deactivate", (x, y) => { Sys.ChangeProductActive(x, false); ((StregSystemCLI)UI).DisplayActivation(x, false); });
-            _adminCommands.Add(":crediton", (x, y) => { Sys.ChangeProductCredit(x, true); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
-            _adminCommands.Add(":creditoff", (x, y) => { Sys.ChangeProductCredit(x, false); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
-            _adminCommands.Add(":addcredits", (x, y) => { Sys.AddCreditsToUser(Sys.GetUser(x), y); UI.DisplayAddedCreditsToUser(Sys.GetUser(x), y); });
+            AddAdminCommands(ref _adminCommands);
 
+            SysLoadProducts();
+            Start();
+        }
+
+        private void SysLoadProducts()
+        {
             try
             {
                 Sys.LoadProdutcs();
@@ -52,17 +51,15 @@ namespace StregSystemProject
             {
                 UI.DisplayGeneralError(e.Message);
             }
-
-            Start();
         }
 
-        public void ParseCommand(string command)
+        private void ParseCommand(string command)
         {
             string[] split = command.Split(' ');
             User user = null;
             Product product;
             int numOfProducts = 1;
-            if (command == "" || command == " " || command == "  " || command == null || split[0] == " ")
+            if (CheckEmpty(command))
             {
                 UI.DisplayGeneralError("No command entered");
                 return;
@@ -88,9 +85,10 @@ namespace StregSystemProject
                             return;
                         }                      
 
+                        //String extension to check for split length
                         if (command.ContainsAmount())
                         {
-                            if(split[1] == " " || split[1] == "" || split[2] == " " || split[2] == "")
+                            if(CheckEmpty(split[1]) || CheckEmpty(split[2]))
                             {
                                 UI.DisplayTooManyArgumentsError(command);
                                 return;
@@ -114,10 +112,7 @@ namespace StregSystemProject
                             return;
                         }
 
-                        if (numOfProducts == 1)
-                            UI.DisplayUserBuysProduct((BuyTransaction) Sys.GetLastestTransacion());
-                        else if (numOfProducts > 1)
-                            UI.DisplayUserBuysProduct(numOfProducts, product, user);  
+                        UIBuyOneOrMoreProducts(user, product, numOfProducts); 
                         
                     }
                     catch (UserNotFoundException e)
@@ -169,14 +164,7 @@ namespace StregSystemProject
                 bool firstArgIsInt = false;
 
                 comm = split[0];
-                if (split.Length > 1)
-                {
-                    
-                    if (int.TryParse(split[1], out arg1) && !Sys.UserExists(split[1]))
-                        firstArgIsInt = true;
-                    else
-                        strArg1 = split[1];
-                }
+                SelectFirstArg(split, ref strArg1, ref arg1, ref firstArgIsInt);
                     
                 if (split.Length == 3)
                     int.TryParse(split[2], out arg2);
@@ -186,30 +174,55 @@ namespace StregSystemProject
                     return;
                 }
 
-                try
-                {
-                    if (firstArgIsInt)
-                        _adminCommands[comm](arg1, arg2);
-                    else
-                        _adminCommands[comm](strArg1, arg2);
-                }
-                catch (KeyNotFoundException)
-                {
-                    UI.DisplayAdminCommandNotFoundMessage(command);
-                }
-                catch (UserNotFoundException e)
-                {
-                    UI.DisplayUserNotFound(e.Message);
-                }
-                catch (ArgumentException e)
-                {
-                    UI.DisplayGeneralError(e.Message);
-                }
-                catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException e)
-                {
-                    UI.DisplayGeneralError(e.Message);
-                }
+                RunAdminCommand(command, comm, strArg1, arg1, arg2, firstArgIsInt);
                 
+            }
+        }
+
+        private void RunAdminCommand(string command, string comm, string strArg1, int arg1, int arg2, bool firstArgIsInt)
+        {
+            try
+            {
+                if (firstArgIsInt)
+                    _adminCommands[comm](arg1, arg2);
+                else
+                    _adminCommands[comm](strArg1, arg2);
+            }
+            catch (KeyNotFoundException)
+            {
+                UI.DisplayAdminCommandNotFoundMessage(command);
+            }
+            catch (UserNotFoundException e)
+            {
+                UI.DisplayUserNotFound(e.Message);
+            }
+            catch (ArgumentException e)
+            {
+                UI.DisplayGeneralError(e.Message);
+            }
+            catch (Microsoft.CSharp.RuntimeBinder.RuntimeBinderException e)
+            {
+                UI.DisplayGeneralError(e.Message);
+            }
+        }
+
+        private void UIBuyOneOrMoreProducts(User user, Product product, int numOfProducts)
+        {
+            if (numOfProducts == 1)
+                UI.DisplayUserBuysProduct((BuyTransaction)Sys.GetLastestTransacion());
+            else if (numOfProducts > 1)
+                UI.DisplayUserBuysProduct(numOfProducts, product, user);
+        }
+
+        private void SelectFirstArg(string[] split, ref string strArg1, ref int arg1, ref bool firstArgIsInt)
+        {
+            if (split.Length > 1)
+            {
+
+                if (int.TryParse(split[1], out arg1) && !Sys.UserExists(split[1]))
+                    firstArgIsInt = true;
+                else
+                    strArg1 = split[1];
             }
         }
 
@@ -224,6 +237,27 @@ namespace StregSystemProject
 
 
             Start();
+        }
+
+        private bool CheckEmpty(string str)
+        {
+            if (str == "" || str == " " || str == "  " || str == null)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private void AddAdminCommands(ref Dictionary<string, Action<dynamic, dynamic>> dict)
+        {
+            dict.Add(":q", (x, y) => { UI.Close(); });
+            dict.Add(":quit", (x, y) => { UI.Close(); });
+            dict.Add(":activate", (x, y) => { Sys.ChangeProductActive(x, true); ((StregSystemCLI)UI).DisplayActivation(x, true); });
+            dict.Add(":deactivate", (x, y) => { Sys.ChangeProductActive(x, false); ((StregSystemCLI)UI).DisplayActivation(x, false); });
+            dict.Add(":crediton", (x, y) => { Sys.ChangeProductCredit(x, true); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
+            dict.Add(":creditoff", (x, y) => { Sys.ChangeProductCredit(x, false); ((StregSystemCLI)UI).DisplayCreditChange(x, false); });
+            dict.Add(":addcredits", (x, y) => { Sys.AddCreditsToUser(Sys.GetUser(x), y); UI.DisplayAddedCreditsToUser(Sys.GetUser(x), y); });
         }
     }
 }
